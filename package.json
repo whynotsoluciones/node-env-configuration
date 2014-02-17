@@ -1,6 +1,6 @@
 {
     "name": "node-env-configuration",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "A node.js module that helps with configuration loading as suggested by twelve factor methodology",
     "main": "index.js",
     "scripts": {
@@ -25,5 +25,8 @@
     },
     "devDependencies": {
         "mocha": "~1.17.1"
+    },
+    "dependencies": {
+        "change-case": "~1.0.6"
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "node-env-configuration",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A node.js module that helps with configuration loading as suggested by twelve factor methodology",
     "main": "index.js",
     "scripts": {

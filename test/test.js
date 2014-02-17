@@ -25,13 +25,21 @@ process.env.APP3_OBJ1_VAR1 = 'Obj1 var 1 value';
 process.env.APP3_OBJ1_VAR2 = 'Obj1 var 2 value';
 process.env.APP3_OBJ2_VAR2 = 'Obj 2 var 2 value';
 process.env.APP3_OBJ3_VAR6 = 'Obj 3 var 6 value';
-process.env.APP3_OBJ4_VAR8 = 'Obj 4 var 8 value';
-process.env.APP3_OBJ4_OBJ41_VAR82 = 'Obj 4 Obj 41 var 82 value';
+process.env.APP3_OBJ4_VAR8 = '4.1';
+// process.env.APP3_OBJ4_OBJ41_VAR82 = 'Obj 4 Obj 41 var 82 value';
+
+var DEFAULTS = {
+    obj4: {
+        obj41: {
+            var82: 'Obj 4 Obj 41 var 82 value'
+        }
+    }
+};
 
 var assert = require('assert'),
     configApp1 = require('./../index')('app1'),
     configApp2 = require('./../index')('app2'),
-    configApp3 = require('./../index')('app3');
+    configApp3 = require('./../index')('app3', DEFAULTS);
 
 describe('Read configuration from environment', function () {
 
@@ -82,7 +90,7 @@ describe('Read configuration from environment', function () {
             obj4: {
                 var8: process.env.APP3_OBJ4_VAR8,
                 obj41: {
-                    var82: process.env.APP3_OBJ4_OBJ41_VAR82
+                    var82: DEFAULTS.obj4.obj41.var82
                 }
             }
         });

@@ -41,5 +41,6 @@ And then you'll get this configuration object:
 #Notes
 * Each *underscore* char after the application name prefix (APP_NAME_ in the example) indicates a new level in the object hierarchy.
 * The appName parameter must be in camel case
+
 #TODO
 * Add Array support

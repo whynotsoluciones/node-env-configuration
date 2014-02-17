@@ -3,11 +3,11 @@ var Config = require('./lib/config'),
 
 var SEPARATOR = '_';
 
-module.exports = function (appName) {
+module.exports = function (appName, defaultConfig) {
 
     // Get env vars prefix based on app name
     appName = appName || '';
-    var config = new Config();
+    var config = new Config(defaultConfig);
     var prefix = changeCase.constantCase(appName);
 
     // Iterate over env vars

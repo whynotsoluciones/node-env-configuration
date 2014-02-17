@@ -27,9 +27,7 @@ Read env vars for **appName**
 ```javascript
 var config = require('node-env-configuration')('appName');
 ```
-
 And then you'll get this configuration object:
-
 ```javascript
 {
     var1: 'var 1',

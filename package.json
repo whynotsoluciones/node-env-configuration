@@ -1,0 +1,29 @@
+{
+    "name": "node-env-configuration",
+    "version": "0.0.0",
+    "description": "A node.js module that helps with configuration loading as suggested by twelve factor methodology",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha -R progress test/test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ecunado/node-env-configuration.git"
+    },
+    "keywords": [
+        "node",
+        "config",
+        "12factor",
+        "configuration",
+        "env",
+        "environment"
+    ],
+    "author": "Ezequiel Cuñado",
+    "license": "BSD",
+    "bugs": {
+        "url": "https://github.com/ecunado/node-env-configuration/issues"
+    },
+    "devDependencies": {
+        "mocha": "~1.17.1"
+    }
+}

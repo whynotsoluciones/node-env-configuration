@@ -17,13 +17,13 @@ Example
 =======
 Suppose you have this config. env vars:
 ```bash
-APP_NAME_VAR1 = 'var 1';
-APP_NAME_VAR2 = 'var 2';
-APP_NAME_OBJ1_VAR1 = 'Obj 1 var 1';
-APP_NAME_OBJ1_VAR2 = 'Obj 1 var 2';
-APP_NAME_OBJ1_OBJ11_VAR1 = 'Obj 11 var 1';
+APP_NAME_VAR1='var 1';
+APP_NAME_VAR2='var 2';
+APP_NAME_OBJ1_VAR1='Obj 1 var 1';
+APP_NAME_OBJ1_VAR2='Obj 1 var 2';
+APP_NAME_OBJ1_OBJ11_VAR1='Obj 11 var 1';
 ```
-Read env vars for appName
+Read env vars for **appName**
 ```javascript
 var config = require('node-env-configuration')('appName');
 ```

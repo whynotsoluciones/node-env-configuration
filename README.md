@@ -45,7 +45,7 @@ And then you'll get this configuration object:
 ```javascript
 var config = require('node-env-configuration')('appName', {
     obj1: {
-        obj11 {
+        obj11: {
             var1: 'Default var1 value'
         }
     }

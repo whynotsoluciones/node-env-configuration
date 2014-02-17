@@ -6,12 +6,12 @@ node-env-configuration is a node.js module that helps with loading configuration
 …
 In a twelve-factor app, env vars are granular controls, each fully orthogonal to other env vars. They are never grouped together as “environments,” but instead are independently managed for each deploy. This is a model that scales up smoothly as the app naturally expands into more deploys over its lifetime.
 
-#Usage
+##Usage
 If you want to read into an object all env vars starting by `APP_NAME_` :
 ```javascript
 var config = require('node-env-configuration')('appName');
 ```
-#Example
+##Example
 Suppose you have this config. env vars:
 ```bash
 APP_NAME_VAR1='var 1';
@@ -38,7 +38,7 @@ And then you'll get this configuration object:
     }
 }
 ```
-#Notes
+##Notes
 * Each *underscore* char after the application name prefix (APP_NAME_ in the example) indicates a new level in the object hierarchy.
 * The appName parameter must be in camel case
 * You can also specify default conf. object as second parameter:
@@ -52,5 +52,5 @@ var config = require('node-env-configuration')('appName', {
 });
 ```
 
-#TODO
+##TODO
 * Add Array support

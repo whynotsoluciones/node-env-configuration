@@ -40,7 +40,7 @@ And then you'll get this configuration object:
 ```
 ##Notes
 * Each *underscore* char after the application name prefix (APP_NAME_ in the example) indicates a new level in the object hierarchy.
-* The appName parameter must be in camel case
+* The appName parameter must be **camel case** 
 * You can also specify default conf. object as second parameter:
 ```javascript
 var config = require('node-env-configuration')('appName', {

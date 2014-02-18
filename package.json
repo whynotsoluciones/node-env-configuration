@@ -19,7 +19,7 @@
         "environment"
     ],
     "author": "Ezequiel Cuñado",
-    "license": "BSD",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/ecunado/node-env-configuration/issues"
     },

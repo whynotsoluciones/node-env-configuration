@@ -55,7 +55,7 @@ var config = require('node-env-configuration')('appName', {
 ##Run Tests
 ```bash
 $ npm test
-```
+``
 
 ##TODO
 * Add Array support

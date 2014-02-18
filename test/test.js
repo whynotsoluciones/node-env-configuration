@@ -2,14 +2,14 @@
  * Set required env vars for appName
  */
 process.env.APP1_VAR1 = 'var 1 value';
-process.env.APP1_VAR2 = 'var 2 value';
+process.env.APP1_VAR2 = '100';
 process.env.APP1_OBJ1_VAR1 = 'Obj1 var 1 value';
 process.env.APP1_OBJ1_VAR2 = 'Obj1 var 2 value';
 
 /**
  * Set required env vars for appName2
  */
-process.env.APP2_VAR1 = 'var 1 value for app 2';
+process.env.APP2_VAR1 = '1.3';
 process.env.APP2_VAR2 = 'var 2 value for app 2';
 process.env.APP2_OBJ1_VAR1 = 'Obj1 var 1 value';
 process.env.APP2_OBJ1_VAR2 = 'Obj1 var 2 value';
@@ -19,7 +19,7 @@ process.env.APP2_OBJ2_OBJ22_VAR1 = 'Obj1 var 2 value';
 /**
  * Set required env vars for appName3
  */
-process.env.APP3_VAR1 = 'var 1 value';
+process.env.APP3_VAR1 = 'true';
 process.env.APP3_VAR2 = 'var 2 value';
 process.env.APP3_OBJ1_VAR1 = 'Obj1 var 1 value';
 process.env.APP3_OBJ1_VAR2 = 'Obj1 var 2 value';
@@ -46,7 +46,7 @@ describe('Read configuration from environment', function () {
     it('should retrieve configuration for app1 from environment', function () {
         assert.deepEqual(configApp1, {
             var1: process.env.APP1_VAR1,
-            var2: process.env.APP1_VAR2,
+            var2: 100,
             obj1: {
                 var1: process.env.APP1_OBJ1_VAR1,
                 var2: process.env.APP1_OBJ1_VAR2
@@ -56,7 +56,7 @@ describe('Read configuration from environment', function () {
 
     it('should retrieve configuration for app2 from environment', function () {
         assert.deepEqual(configApp2, {
-            var1: process.env.APP2_VAR1,
+            var1: 1.3,
             var2: process.env.APP2_VAR2,
             obj1: {
                 var1: process.env.APP2_OBJ1_VAR1,
@@ -75,7 +75,7 @@ describe('Read configuration from environment', function () {
 
     it('should retrieve configuration for app3 from environment', function () {
         assert.deepEqual(configApp3, {
-            var1: process.env.APP3_VAR1,
+            var1: true,
             var2: process.env.APP3_VAR2,
             obj1: {
                 var1: process.env.APP3_OBJ1_VAR1,

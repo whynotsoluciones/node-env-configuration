@@ -13,12 +13,18 @@ module.exports = function (appName, defaultConfig) {
     // Iterate over env vars
     var hierarchy = [];
     var env;
+    var value;
     for (env in process.env) {
         // if env is in app namespace
         if (env.indexOf(prefix) === 0) {
             // split each var using underscore as separator
             hierarchy = env.replace(prefix + '_', '').split(SEPARATOR);
-            config.extend(hierarchy, process.env[env]);
+            try {
+                value = JSON.parse(process.env[env]);
+            } catch (e) {
+                value = process.env[env];
+            }
+            config.extend(hierarchy, value);
         }
     }
 

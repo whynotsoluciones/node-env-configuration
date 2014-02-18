@@ -1,7 +1,7 @@
 {
     "name": "node-env-configuration",
     "version": "0.0.4",
-    "description": "A node.js module that helps with configuration loading as suggested by twelve factor methodology",
+    "description": "A node.js module that helps with loading of hierarchical configuration from environment variables as suggested by twelve factor methodology",
     "main": "index.js",
     "scripts": {
         "test": "mocha -R progress test/test.js"

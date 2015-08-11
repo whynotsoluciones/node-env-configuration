@@ -1,32 +1,32 @@
 {
-    "name": "node-env-configuration",
-    "version": "0.0.5",
-    "description": "A node.js module that helps with loading of hierarchical configuration from environment variables as suggested by twelve factor methodology",
-    "main": "index.js",
-    "scripts": {
-        "test": "mocha -R progress test/test.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ecunado/node-env-configuration.git"
-    },
-    "keywords": [
-        "node",
-        "config",
-        "12factor",
-        "configuration",
-        "env",
-        "environment"
-    ],
-    "author": "Ezequiel Cuñado",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/ecunado/node-env-configuration/issues"
-    },
-    "devDependencies": {
-        "mocha": "~1.17.1"
-    },
-    "dependencies": {
-        "change-case": "~1.0.6"
-    }
+  "name": "node-env-configuration",
+  "version": "0.0.6",
+  "description": "A node.js module that helps with loading of hierarchical configuration from environment variables as suggested by twelve factor methodology",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R progress test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ecunado/node-env-configuration.git"
+  },
+  "keywords": [
+    "node",
+    "config",
+    "12factor",
+    "configuration",
+    "env",
+    "environment"
+  ],
+  "author": "Ezequiel Cuñado",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecunado/node-env-configuration/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1"
+  },
+  "dependencies": {
+    "change-case": "~1.0.6"
+  }
 }

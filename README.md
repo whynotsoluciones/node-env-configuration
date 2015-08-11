@@ -11,6 +11,8 @@ If you want to read into an object all env vars starting by `APP_NAME_` :
 ```javascript
 var config = require('node-env-configuration')('appName');
 ```
+Otherwise it will return all env vars available.
+
 ##Example
 Suppose you have this config. env vars:
 ```bash
@@ -40,7 +42,7 @@ And then you'll get this configuration object:
 ```
 ##Notes
 * Each *underscore* char after the application name prefix (APP_NAME_ in the example) indicates a new level in the object hierarchy.
-* The appName parameter must be **camel case** 
+* The appName parameter must be **camel case**
 * You can also specify default conf. object as second parameter:
 ```javascript
 var config = require('node-env-configuration')('appName', {
@@ -50,6 +52,16 @@ var config = require('node-env-configuration')('appName', {
         }
     }
 });
+```
+* Optionally you can also pass a debug function like e.g. console.debug for warnings
+```javascript
+var config = require('node-env-configuration')('appName', {
+    obj1: {
+        obj11: {
+            var1: 'Default var1 value'
+        }
+    }
+}, console.debug.bind(console));
 ```
 
 ##Run Tests

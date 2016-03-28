@@ -6,13 +6,12 @@ var Config = require('./lib/config'),
 
 var SEPARATOR = '_';
 
-module.exports = function (appName, defaultConfig, debug) {
+module.exports = function (appName, defaultConfig) {
 
   // Get env vars prefix based on app name
   appName = appName || '';
   var config = new Config(defaultConfig);
   var prefix = changeCase.constantCase(appName);
-  var debug = typeof debug === 'function' ? debug : function () {};
 
   // Iterate over env vars
   var hierarchy = [];
@@ -28,13 +27,10 @@ module.exports = function (appName, defaultConfig, debug) {
         value = JSON.parse(process.env[env]);
       } catch (error) {
         value = process.env[env];
-        debug(error.message);
       }
       try {
         config.extend(hierarchy, value);
-      } catch (error) {
-        debug(error.message);
-      }
+      } catch (error) { /* Use unparsed value */ }
     }
   }
 

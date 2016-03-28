@@ -1,0 +1,7 @@
+--require ./test/globals
+--reporter dot
+--ui bdd
+--recursive
+--colors
+--timeout 60000
+--slow 300

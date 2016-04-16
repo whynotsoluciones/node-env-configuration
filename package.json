@@ -19,10 +19,7 @@
     "environment"
   ],
   "author": "Ezequiel Cuñado",
-  "licenses": [
-    "type": "MIT",
-    "url": "https://github.com/whynotsoluciones/node-env-configuration/blob/master/LICENSE"
-  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ecunado/node-env-configuration/issues"
   },

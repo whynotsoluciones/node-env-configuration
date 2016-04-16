@@ -3,14 +3,16 @@
 
 var fixtures = require('./index.fixtures'),
   rewire = require("rewire"),
-  _ = require('lodash'),
-  nodeenvconfiguration = rewire('./../../index');
+  _ = require('lodash');
 
 describe('Read configuration from environment', function () {
 
+  var nodeenvconfiguration;
+
   describe('Application 1', function () {
 
-    before(function (done) {
+    beforeEach(function (done) {
+      nodeenvconfiguration = rewire('./../../index');
       nodeenvconfiguration.__set__({
         process: {
           env: fixtures.fixture1
@@ -20,7 +22,9 @@ describe('Read configuration from environment', function () {
     });
 
     it('should retrieve configuration for app1 from environment', function (done) {
-      var configApp1 = nodeenvconfiguration('app1');
+      var configApp1 = nodeenvconfiguration({
+        prefix: 'app1'
+      });
       // type checking
       expect(configApp1).to.have.property('var2', 100);
       expect(configApp1).to.deep.equal(fixtures.config1);
@@ -31,7 +35,8 @@ describe('Read configuration from environment', function () {
 
   describe('Application 2', function () {
 
-    before(function (done) {
+    beforeEach(function (done) {
+      nodeenvconfiguration = rewire('./../../index');
       nodeenvconfiguration.__set__({
         process: {
           env: fixtures.fixture2
@@ -41,7 +46,9 @@ describe('Read configuration from environment', function () {
     });
 
     it('should retrieve configuration for app2 from environment', function (done) {
-      var configApp2 = nodeenvconfiguration('app2');
+      var configApp2 = nodeenvconfiguration({
+        prefix: 'app2'
+      });
       // type checking
       expect(configApp2).to.have.property('var1', 1.3);
       expect(configApp2).to.deep.equal(fixtures.config2);
@@ -52,7 +59,8 @@ describe('Read configuration from environment', function () {
 
   describe('Application 3', function () {
 
-    before(function (done) {
+    beforeEach(function (done) {
+      nodeenvconfiguration = rewire('./../../index');
       nodeenvconfiguration.__set__({
         process: {
           env: fixtures.fixture3
@@ -62,7 +70,9 @@ describe('Read configuration from environment', function () {
     });
 
     it('should retrieve configuration for app3 from environment', function (done) {
-      var configApp3 = nodeenvconfiguration('app3');
+      var configApp3 = nodeenvconfiguration({
+        prefix: 'app3'
+      });
       // type checking
       expect(configApp3).to.have.property('var1', true);
       expect(configApp3).to.deep.equal(fixtures.config3);
@@ -77,7 +87,8 @@ describe('Read configuration from environment', function () {
     var allConf = _.cloneDeep(fixtures.config1);
     allConf = _.merge(allConf, fixtures.config2, fixtures.config3);
 
-    before(function (done) {
+    beforeEach(function (done) {
+      nodeenvconfiguration = rewire('./../../index');
       nodeenvconfiguration.__set__({
         process: {
           env: allEnv
@@ -87,7 +98,9 @@ describe('Read configuration from environment', function () {
     });
 
     it('should retrieve configuration for app1 from environment', function (done) {
-      var configApp1 = nodeenvconfiguration('app1');
+      var configApp1 = nodeenvconfiguration({
+        prefix: 'app1'
+      });
       // type checking
       expect(configApp1).to.have.property('var2', 100);
       expect(configApp1).to.not.deep.equal(allConf);
@@ -96,7 +109,9 @@ describe('Read configuration from environment', function () {
     });
 
     it('should retrieve configuration for app2 from environment', function (done) {
-      var configApp2 = nodeenvconfiguration('app2');
+      var configApp2 = nodeenvconfiguration({
+        prefix: 'app2'
+      });
       // type checking
       expect(configApp2).to.have.property('var1', 1.3);
       expect(configApp2).to.not.deep.equal(allConf);
@@ -105,7 +120,9 @@ describe('Read configuration from environment', function () {
     });
 
     it('should retrieve configuration for app3 from environment', function (done) {
-      var configApp3 = nodeenvconfiguration('app3');
+      var configApp3 = nodeenvconfiguration({
+        prefix: 'app3'
+      });
       // type checking
       expect(configApp3).to.have.property('var1', true);
       expect(configApp3).to.not.deep.equal(allConf);
@@ -117,29 +134,72 @@ describe('Read configuration from environment', function () {
 
   describe('Extend existing configurations', function () {
 
-    before(function (done) {
-      nodeenvconfiguration.__set__({
-        process: {
-          env: fixtures.fixture3
-        }
+    describe('Application 1', function () {
+
+      beforeEach(function (done) {
+        nodeenvconfiguration = rewire('./../../index');
+        nodeenvconfiguration.__set__({
+          process: {
+            env: fixtures.fixture1
+          }
+        });
+        done();
       });
-      done();
+
+      it('should retrieve configuration for app1 from environment', function (done) {
+        var existing = {
+          var1: false,
+          var2: 'Other value',
+          obj5: {
+            var51: false
+          }
+        };
+        var configApp1 = nodeenvconfiguration({
+          prefix: 'app1',
+          defaults: existing
+        });
+
+        expect(configApp1).to.have.property('var1', fixtures.fixture1.APP1_VAR1);
+        expect(configApp1).to.have.property('var2', fixtures.config1.var2);
+        expect(configApp1).to.have.deep.property('obj5.var51', false);
+        expect(configApp1).to.deep.equal(_.merge(existing, fixtures.config1));
+        done();
+      });
+
     });
 
-    it('should retrieve configuration for app3 from environment', function (done) {
-      var existing = {
-        var1: false,
-        var2: 'Other value',
-        obj5: {
-          var51: false
-        }
-      };
-      var configApp3 = nodeenvconfiguration('app3', existing);
-      expect(configApp3).to.have.property('var1', true);
-      expect(configApp3).to.have.property('var2', fixtures.fixture3.APP3_VAR2);
-      expect(configApp3).to.have.deep.property('obj5.var51', false);
-      expect(configApp3).to.deep.equal(_.merge(existing, fixtures.config3));
-      done();
+    describe('Application 3', function () {
+
+      beforeEach(function (done) {
+        nodeenvconfiguration = rewire('./../../index');
+        nodeenvconfiguration.__set__({
+          process: {
+            env: fixtures.fixture3
+          }
+        });
+        done();
+      });
+
+      it('should retrieve configuration for app3 from environment', function (done) {
+        var existing = {
+          var1: false,
+          var2: 'Other value',
+          obj5: {
+            var51: false
+          }
+        };
+        var configApp3 = nodeenvconfiguration({
+          prefix: 'app3',
+          defaults: existing
+        });
+
+        expect(configApp3).to.have.property('var1', true);
+        expect(configApp3).to.have.property('var2', fixtures.fixture3.APP3_VAR2);
+        expect(configApp3).to.have.deep.property('obj5.var51', false);
+        expect(configApp3).to.deep.equal(_.merge(existing, fixtures.config3));
+        done();
+      });
+
     });
 
   });
@@ -149,7 +209,8 @@ describe('Read configuration from environment', function () {
     var allEnv = _.cloneDeep(fixtures.fixture1);
     allEnv = _.merge(allEnv, fixtures.fixture2, fixtures.fixture3);
 
-    before(function (done) {
+    beforeEach(function (done) {
+      nodeenvconfiguration = rewire('./../../index');
       nodeenvconfiguration.__set__({
         process: {
           env: allEnv
@@ -161,6 +222,31 @@ describe('Read configuration from environment', function () {
     it('should retrieve all apps configuration', function (done) {
       var config = nodeenvconfiguration();
       expect(config).to.deep.equal(fixtures.all);
+      done();
+    });
+
+  });
+
+  describe('Get array environment variables', function () {
+
+    beforeEach(function (done) {
+      nodeenvconfiguration = rewire('./../../index');
+      nodeenvconfiguration.__set__({
+        process: {
+          env: fixtures.arrayFixture
+        }
+      });
+      done();
+    });
+
+    it('should retrieve configuration with arrays from environment', function (done) {
+
+      var configArr = nodeenvconfiguration({
+        prefix: 'apparr',
+        arraySeparator: ','
+      });
+
+      expect(configArr).to.deep.equal(fixtures.arrayConfig);
       done();
     });
 

@@ -6,69 +6,62 @@ node-env-configuration is a node.js module that helps with loading configuration
 …
 In a twelve-factor app, env vars are granular controls, each fully orthogonal to other env vars. They are never grouped together as “environments,” but instead are independently managed for each deploy. This is a model that scales up smoothly as the app naturally expands into more deploys over its lifetime.
 
-##Usage
-If you want to read into an object all env vars starting by `APP_NAME_` :
-```javascript
-var config = require('node-env-configuration')('appName');
-```
-Otherwise it will return all env vars available.
+# Quick Start
+Suppose you have this json default configuration for your node application:
 
-##Example
-Suppose you have this config. env vars:
-```bash
-APP_NAME_VAR1='var 1';
-APP_NAME_VAR2='var 2';
-APP_NAME_OBJ1_VAR1='Obj 1 var 1';
-APP_NAME_OBJ1_VAR2='Obj 1 var 2';
-APP_NAME_OBJ1_OBJ11_VAR1='Obj 11 var 1';
-```
-Read env vars for **appName**
 ```javascript
-var config = require('node-env-configuration')('appName');
-```
-And then you'll get this configuration object:
-```javascript
-{
-    var1: 'var 1',
-    var2: 'var 2',
-    obj1: {
-        var1: 'Obj 1 var 1',
-        var2: 'Obj 1 var 2',
-        obj11: {
-            var1: 'Obj 11 var 1'
-        }
-    }
+var defaultConfiguration = {
+  http_port: 8000,
+  https_port: 8001,
+  mongodb: {
+    name: 'api', // Database name
+    host: '127.0.0.1', // Database host
+    user: '', // Database user
+    password: '', // Database password
+    port: 27017,
+    options: {} // MongoDB options
+  }
 }
 ```
-##Notes
-* Each *underscore* char after the application name prefix (APP_NAME_ in the example) indicates a new level in the object hierarchy.
-* The appName parameter must be **camel case**
-* You can also specify default conf. object as second parameter:
-```javascript
-var config = require('node-env-configuration')('appName', {
-    obj1: {
-        obj11: {
-            var1: 'Default var1 value'
-        }
-    }
-});
-```
-* Optionally you can also pass a debug function like e.g. console.debug for warnings
-```javascript
-var config = require('node-env-configuration')('appName', {
-    obj1: {
-        obj11: {
-            var1: 'Default var1 value'
-        }
-    }
-}, console.debug.bind(console));
+
+Then you want to override this configuration (or subset of it) for your production environment. You define the next environment variables :
+
+```bash
+API_APP_HTTP_PORT='80';
+API_APP_HTTPS_PORT='443';
+API_APP_MONGODB_NAME='api_db';
+API_APP_MONGODB_HOST='api.example.com';
+API_APP_MONGODB_USER='username';
+API_APP_MONGODB_PASSWORD='secret password';
 ```
 
-##Run Tests
+In your code your can override **defaultConfiguration** object with these environment variables:
+
+```javascript
+var nodeenvconfiguration = require('node-env-configuration');
+var config = nodeenvconfiguration({
+  defaults: defaultConfiguration,
+  prefix: 'apiApp' // Read only env vars starting with API_APP prefix
+});
+```
+
+# Configuration parameters
+Name  | Default Value | Description
+------|---------------|-------------
+`prefix` | '' | **Pascal case** prefix. Restrict variables to read from environment to those starting with this prefix in **snake case**
+`hierarchySeparator` | '_' | Character used in env variables to create a nested object in resulting object
+`arraySeparator` | null | This character, if specified, is used as an array separator. So if a variable contains this character, the variable is parsed as an array of values
+`defaults` | {} | Default object values
+
+# Notes
+
+* **Snake case** env variables are transformed to **pascal case** in resulting object
+
+# Running Tests
 
 ```bash
 $ npm test
 ```
 
-##TODO
-* Add Array support
+# License
+[MIT](https://github.com/whynotsoluciones/node-env-configuration/blob/master/LICENSE "MIT")

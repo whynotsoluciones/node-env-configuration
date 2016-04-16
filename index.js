@@ -1,39 +1,69 @@
 /*jslint node: true */
+/*global process */
+/*jshint -W030 */
 "use strict";
 
 var Config = require('./lib/config'),
   changeCase = require('change-case');
 
-var SEPARATOR = '_';
+var defaults = {
+  prefix: '',
+  hierarchySeparator: '_',
+  arraySeparator: null,
+  defaults: {}
+};
 
-module.exports = function (appName, defaultConfig) {
+module.exports = function (config) {
 
-  // Get env vars prefix based on app name
-  appName = appName || '';
-  var config = new Config(defaultConfig);
-  var prefix = changeCase.constantCase(appName);
+  var i, prefixCC, env, value, configuration, hierarchy = [];
 
+  var conf = {};
+
+  // Extend defaults with user configuration
+  conf.prefix = (config && config.prefix) ? config.prefix : defaults.prefix;
+  conf.hierarchySeparator = (config && config.hierarchySeparator) ? config.hierarchySeparator : defaults.hierarchySeparator;
+  conf.arraySeparator = (config && config.arraySeparator) ? config.arraySeparator : defaults.arraySeparator;
+  conf.defaults = (config && config.defaults) ? config.defaults : defaults.defaults;
+
+  // Namespace (prefix) for config env variables
+  prefixCC = changeCase.constantCase(conf.prefix);
+  // Create config object
+  configuration = new Config(conf.defaults);
   // Iterate over env vars
-  var hierarchy = [];
-  var env;
-  var value;
   for (env in process.env) {
     // if env is in app namespace
-    if (env.indexOf(prefix) === 0) {
-      // split each var using underscore as separator
-      hierarchy = env.replace(prefix !== '' ?
-        prefix + '_' : prefix, '').split(SEPARATOR);
-      try {
-        value = JSON.parse(process.env[env]);
-      } catch (error) {
-        value = process.env[env];
+    if (env.indexOf(prefixCC) === 0) {
+      // split each var using separator
+      hierarchy = env.replace(prefixCC !== '' ?
+        prefixCC + conf.hierarchySeparator : prefixCC, '').split(conf.hierarchySeparator);
+
+      // Array property ?
+      if (conf.arraySeparator && process.env[env].indexOf(conf.arraySeparator) !== -1) {
+        value = process.env[env].split(conf.arraySeparator);
+        // Try to parse each element in array
+        for (i = 0; i < value.length; i = i + 1) {
+          try {
+            value[i] = JSON.parse(value[i]);
+          } catch (error) {
+            // Do not parse string values
+            // Remove leading and traling spaces
+            if (typeof value[i] === 'string') {
+              value[i] = value[i].trim();
+            }
+          }
+        }
+      } else {
+        try {
+          value = JSON.parse(process.env[env]);
+        } catch (error) {
+          /* Do not parse value */
+          value = process.env[env];
+        }
       }
-      try {
-        config.extend(hierarchy, value);
-      } catch (error) { /* Use unparsed value */ }
+      configuration.extend(hierarchy, value);
     }
   }
 
-  return config.conf;
+  return configuration.conf;
 
 };

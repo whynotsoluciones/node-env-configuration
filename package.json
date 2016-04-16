@@ -1,6 +1,6 @@
 {
   "name": "node-env-configuration",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "A node.js module that helps with loading of hierarchical configuration from environment variables as suggested by twelve factor methodology",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,10 @@
     "environment"
   ],
   "author": "Ezequiel Cuñado",
-  "license": "MIT",
+  "licenses": [
+    "type": "MIT",
+    "url": "https://github.com/whynotsoluciones/node-env-configuration/blob/master/LICENSE"
+  ],
   "bugs": {
     "url": "https://github.com/ecunado/node-env-configuration/issues"
   },

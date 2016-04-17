@@ -49,7 +49,6 @@ var config = nodeenvconfiguration({
 Name  | Default Value | Description
 ------|---------------|-------------
 `prefix` | '' | **Pascal case** prefix. Restrict variables to read from environment to those starting with this prefix in **snake case**
-`hierarchySeparator` | '_' | Character used in env variables to create a nested object in resulting object
 `arraySeparator` | null | This character, if specified, is used as an array separator. So if a variable contains this character, the variable is parsed as an array of values
 `defaults` | {} | Default object values
 

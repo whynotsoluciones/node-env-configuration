@@ -8,7 +8,6 @@ var Config = require('./lib/config'),
 
 var defaults = {
   prefix: '',
-  hierarchySeparator: '_',
   arraySeparator: null,
   defaults: {}
 };
@@ -21,7 +20,6 @@ module.exports = function (config) {
 
   // Extend defaults with user configuration
   conf.prefix = (config && config.prefix) ? config.prefix : defaults.prefix;
-  conf.hierarchySeparator = (config && config.hierarchySeparator) ? config.hierarchySeparator : defaults.hierarchySeparator;
   conf.arraySeparator = (config && config.arraySeparator) ? config.arraySeparator : defaults.arraySeparator;
   conf.defaults = (config && config.defaults) ? config.defaults : defaults.defaults;
 
@@ -34,8 +32,7 @@ module.exports = function (config) {
     // if env is in app namespace
     if (env.indexOf(prefixCC) === 0) {
       // split each var using separator
-      hierarchy = env.replace(prefixCC !== '' ?
-        prefixCC + conf.hierarchySeparator : prefixCC, '').split(conf.hierarchySeparator);
+      hierarchy = env.replace(prefixCC !== '' ? prefixCC + '_' : prefixCC, '').split('_');
 
       // Array property ?
       if (conf.arraySeparator && process.env[env].indexOf(conf.arraySeparator) !== -1) {

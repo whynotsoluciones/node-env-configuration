@@ -45,16 +45,21 @@ var config = nodeenvconfiguration({
 });
 ```
 
+# Notes
+
+* Underscore character in environment variables (excluding prefix underscore) results in adding a new hierarchy level in result object:
+
+```bash
+API_APP_MONGODB_NAME = 'api_db'  # Matches obj.mongodb.name property
+API_APP_MONGODB_URL_HOST = 'api.example.com'  # Matches obj.mongodb.url.host propery
+```
+
 # Configuration parameters
 Name  | Default Value | Description
 ------|---------------|-------------
 `prefix` | '' | **Pascal case** prefix. Restrict variables to read from environment to those starting with this prefix in **snake case**
 `arraySeparator` | null | This character, if specified, is used as an array separator. So if a variable contains this character, the variable is parsed as an array of values
 `defaults` | {} | Default object values
-
-# Notes
-
-* **Snake case** env variables are transformed to **pascal case** in resulting object
 
 # Running Tests
 

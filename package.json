@@ -1,6 +1,6 @@
 {
   "name": "node-env-configuration",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A node.js module that helps with loading of hierarchical configuration from environment variables as suggested by twelve factor methodology",
   "main": "index.js",
   "scripts": {
